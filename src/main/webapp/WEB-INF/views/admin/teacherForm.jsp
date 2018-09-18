@@ -35,18 +35,15 @@
                 <td><form:errors path="username"/></td>
             </tr>
             <tr>
-                <td>Hasło: </td>
-                <td><form:input type="password" path="password"/></td>
-                <td><form:errors path="password"/></td>
-            </tr>
-            <tr>
                 <td>Przedmioty: </td>
                 <td>
-                    <c:forEach items="${subjects}" var="subject">
-                        <div class="checkbox">
-                            <label><input type="checkbox" path="subjects" value="">${subject.name}</label>
-                        </div>
-                    </c:forEach>
+                    <%--<c:forEach items="${subjects}" var="subject">--%>
+                        <%--&lt;%&ndash;<form:checkbox path="subjects" value="${subject.id}" label="${subject.name}"/><br>&ndash;%&gt;--%>
+                        <%--<div class="checkbox">--%>
+                            <%--<label><input type="checkbox" path="subjects" value="${subject.id}">${subject.name}</label>--%>
+                        <%--</div>--%>
+                    <%--</c:forEach>--%>
+                    <form:checkboxes path="subjects" items="${subjects}"   itemValue="id" itemLabel="name" delimiter="<br>"/>
                 </td>
                 <%--<td><form:select path="subjects" items="${subjects}" itemLabel="name" itemValue="id" multiple="true"/></td>--%>
                 <td><form:errors path="subjects"/></td>
@@ -58,7 +55,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td><input type="submit" value="Dodaj"/></td>
+                <td><input type="submit" value="Zapisz"/></td>
                 <td></td>
             </tr>
         </table>

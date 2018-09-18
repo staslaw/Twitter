@@ -12,7 +12,6 @@ public class User {
     @NotBlank
     @Column(unique = true)
     protected String username;
-    @NotBlank
     protected String password;
     @NotBlank
     protected String firstName;

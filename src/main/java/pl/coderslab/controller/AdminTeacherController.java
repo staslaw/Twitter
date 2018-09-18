@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.entity.*;
 import pl.coderslab.repository.*;
+import pl.coderslab.service.MailService;
+import pl.coderslab.service.StudentServiceImpl;
 import pl.coderslab.service.TeacherServiceImpl;
 
 import javax.validation.Valid;
@@ -33,6 +35,10 @@ public class AdminTeacherController {
     StudentRepository studentRepository;
     @Autowired
     AdminRepository adminRepository;
+    @Autowired
+    StudentServiceImpl studentService;
+    @Autowired
+    MailService mailService;
 
 
     @RequestMapping("")
@@ -56,6 +62,8 @@ public class AdminTeacherController {
             Admin admin = adminRepository.findByUsername(teacher.getUsername());
             if (student == null && admin == null) {
                 try {
+                    teacher.setPassword(studentService.createPassword());
+                    mailService.generateAndSendEmail(teacher.getUsername(), teacher.getUsername(), teacher.getPassword());
                     teacherService.saveTeacher(teacher);
                     redirectAttributes.addFlashAttribute("message", "Nauczyciel został dodany.");
                     return "redirect:/admin/teachers";
@@ -91,15 +99,33 @@ public class AdminTeacherController {
     }
 
     @PostMapping("/update")
-    public String updateTeacher2(@Valid Teacher teacher, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String updateTeacher2(@Valid Teacher teacherUpdated, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "admin/teacherForm";
         } else {
-            Student student = studentRepository.findByUsername(teacher.getUsername());
-            Admin admin = adminRepository.findByUsername(teacher.getUsername());
+            Student student = studentRepository.findByUsername(teacherUpdated.getUsername());
+            Admin admin = adminRepository.findByUsername(teacherUpdated.getUsername());
             if (student == null && admin == null) {
                 try {
-                    teacherService.saveTeacher(teacher);
+                    Teacher teacher = teacherRepository.findOne(teacherUpdated.getId());
+                    if (teacher.getFirstName() != teacherUpdated.getFirstName()) {
+                        teacherRepository.UpdateFirsNameQuery(teacherUpdated.getFirstName(), teacher.getId());
+                    }
+                    if (teacher.getLastName() != teacherUpdated.getLastName()) {
+                        teacherRepository.UpdateLastNameQuery(teacherUpdated.getLastName(), teacher.getId());
+                    }
+                    if (teacher.getDescription() != teacherUpdated.getDescription()) {
+                        teacherRepository.UpdateDescriptionQuery(teacherUpdated.getDescription(), teacher.getId());
+                    }
+                    if (teacher.getUsername() != teacherUpdated.getUsername()) {
+                        teacherRepository.UpdateUsernameQuery(teacherUpdated.getUsername(), teacher.getId());
+                    }
+//                    if (teacher.getSubjects() != teacherUpdated.getSubjects()) {
+                    System.out.println(teacherUpdated.getSubjects());
+                    System.out.println(teacher.getSubjects());
+                    System.out.println(teacher.getId());
+                        teacherRepository.UpdateSubjectsQuery(teacherUpdated.getSubjects(), teacher.getId());
+//                    }
                     redirectAttributes.addFlashAttribute("message", "Nauczyciel został zmodyfikowany.");
                     return "redirect:/admin/teachers";
                 } catch (Exception e) {

@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.entity.Lesson;
 import pl.coderslab.entity.Mark;
@@ -76,6 +77,12 @@ public class TeacherController {
                 return "redirect:/teacher/marks/{idL}";
             }
         }
+    }
+
+    @RequestMapping("/marks/add")
+    @ResponseBody
+    public String addPrompt() {
+        return "aha";
     }
 
     @RequestMapping("/marks/{idL}/addSeries")

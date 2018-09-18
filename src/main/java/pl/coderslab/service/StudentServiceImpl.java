@@ -6,6 +6,8 @@ import pl.coderslab.entity.Student;
 import pl.coderslab.repository.RoleRepository;
 import pl.coderslab.repository.StudentRepository;
 
+import java.util.Random;
+
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -31,5 +33,19 @@ public class StudentServiceImpl implements StudentService {
         student.setEnabled(1);
         student.setRole(roleRepository.findOneRoleByNameQuery("ROLE_STUDENT"));
         studentRepository.save(student);
+    }
+
+    public String createPassword() {
+        Random random = new Random();
+        String password = "";
+        for (int i = 0; i < 10; i++) {
+            int n = random.nextInt(52) + 65;
+            if (n > 90) {
+                n = n + 6;
+            }
+            char x = (char)n;
+            password += x;
+        }
+        return password;
     }
 }

@@ -35,11 +35,6 @@
                 <td><form:errors path="username"/></td>
             </tr>
             <tr>
-                <td>Hasło: </td>
-                <td><form:input type="password" path="password"/></td>
-                <td><form:errors path="password"/></td>
-            </tr>
-            <tr>
                 <td>Klasa: </td>
                 <td><form:select path="team" items="${groups}" itemLabel="name" itemValue="id"/></td>
                 <td><form:errors path="team"/></td>
@@ -51,7 +46,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td><input type="submit" value="Dodaj"/></td>
+                <td><input type="submit" value="Zapisz"/></td>
                 <td></td>
             </tr>
         </table>

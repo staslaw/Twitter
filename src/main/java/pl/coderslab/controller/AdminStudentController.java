@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.entity.*;
 import pl.coderslab.repository.*;
 import pl.coderslab.service.CurrentUser;
+import pl.coderslab.service.MailService;
 import pl.coderslab.service.StudentServiceImpl;
 
 import javax.validation.Valid;
@@ -35,6 +36,8 @@ public class AdminStudentController {
     TeacherRepository teacherRepository;
     @Autowired
     AdminRepository adminRepository;
+    @Autowired
+    MailService mailService;
 
     @RequestMapping("")
     public String toStudents() {
@@ -56,7 +59,9 @@ public class AdminStudentController {
             Teacher teacher = teacherRepository.findByUsername(student.getUsername());
             if (admin == null && teacher == null) {
                 try {
+                    student.setPassword(studentService.createPassword());
                     studentService.saveStudent(student);
+                    mailService.generateAndSendEmail(student.getUsername(), student.getUsername(), student.getPassword());
                     redirectAttributes.addFlashAttribute("message", "Uczeń dodany prawidłowo.");
                     return "redirect:/admin/students";
                 } catch (Exception e) {

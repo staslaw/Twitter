@@ -50,7 +50,7 @@
                                     <form:checkbox path="markSeries" value="${markser}" checked="true" hidden="true"/>
                                     <form:checkbox path="student" value="${student}" checked="true" hidden="true"/>
                                     <form:checkbox path="lesson" value="${lesson}" checked="true" hidden="true"/>
-                                    <form:input path="value"/>
+                                    <form:input path="value" size="5%"/>
                                 </form:form>
                             </c:when>
                         </c:choose>
@@ -84,5 +84,7 @@
 </div>
 
 <jsp:include page="../../../WEB-INF/fragments/footer.jsp"/>
+
+
 </body>
 </html>
