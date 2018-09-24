@@ -16,6 +16,7 @@ import pl.coderslab.service.StudentServiceImpl;
 import pl.coderslab.service.TeacherServiceImpl;
 
 import javax.validation.Valid;
+import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -108,24 +109,27 @@ public class AdminTeacherController {
             if (student == null && admin == null) {
                 try {
                     Teacher teacher = teacherRepository.findOne(teacherUpdated.getId());
-                    if (teacher.getFirstName() != teacherUpdated.getFirstName()) {
+                    if (!teacher.getFirstName().equals(teacherUpdated.getFirstName())) {
                         teacherRepository.UpdateFirsNameQuery(teacherUpdated.getFirstName(), teacher.getId());
                     }
-                    if (teacher.getLastName() != teacherUpdated.getLastName()) {
+                    if (!teacher.getLastName().equals(teacherUpdated.getLastName())) {
                         teacherRepository.UpdateLastNameQuery(teacherUpdated.getLastName(), teacher.getId());
                     }
-                    if (teacher.getDescription() != teacherUpdated.getDescription()) {
+                    if (!teacher.getDescription().equals(teacherUpdated.getDescription())) {
                         teacherRepository.UpdateDescriptionQuery(teacherUpdated.getDescription(), teacher.getId());
                     }
-                    if (teacher.getUsername() != teacherUpdated.getUsername()) {
+                    if (!teacher.getUsername().equals(teacherUpdated.getUsername())) {
                         teacherRepository.UpdateUsernameQuery(teacherUpdated.getUsername(), teacher.getId());
                     }
-//                    if (teacher.getSubjects() != teacherUpdated.getSubjects()) {
-                    System.out.println(teacherUpdated.getSubjects());
-                    System.out.println(teacher.getSubjects());
-                    System.out.println(teacher.getId());
-                        teacherRepository.UpdateSubjectsQuery(teacherUpdated.getSubjects(), teacher.getId());
-//                    }
+                    if (teacher.getSubjects() != teacherUpdated.getSubjects()) {
+                        System.out.println(teacherUpdated.getSubjects());
+                        System.out.println(teacher.getSubjects());
+                        System.out.println(teacher.getId());
+                        teacherRepository.deleteAllSubjcetsOfTeacherNative(teacher.getId());
+                        for (Subject item : teacherUpdated.getSubjects()) {
+                            teacherRepository.insertIntoTecherHisSubjectsNative(teacher.getId(), item.getId());
+                        }
+                    }
                     redirectAttributes.addFlashAttribute("message", "Nauczyciel został zmodyfikowany.");
                     return "redirect:/admin/teachers";
                 } catch (Exception e) {

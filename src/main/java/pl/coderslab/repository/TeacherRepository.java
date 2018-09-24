@@ -10,6 +10,7 @@ import pl.coderslab.entity.Teacher;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
@@ -47,6 +48,15 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     @Transactional
     @Modifying
     @Query("update Teacher t set t.subjects = ?1 where t.id = ?2")
-    void UpdateSubjectsQuery(List<Subject> subjects, Long id);
+    void UpdateSubjectsQuery(Set<Subject> subjects, Long id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM teachers_subjects WHERE teachers_id = ?1", nativeQuery = true)
+    void deleteAllSubjcetsOfTeacherNative(Long id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO teachers_subjects (teachers_id, subjects_id) VALUES (?1, ?2)", nativeQuery = true)
+    void insertIntoTecherHisSubjectsNative(Long idTeacher, Long idSubject);
 }

@@ -6,6 +6,7 @@ import pl.coderslab.model.User;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "teachers")
@@ -15,7 +16,7 @@ public class Teacher extends User {
     private Long id;
     @ManyToMany
     @JsonIgnore
-    private List<Subject> subjects;
+    private Set<Subject> subjects;
     @OneToOne(mappedBy = "educator")
     @JsonIgnore
     private Team educatorGroup;
@@ -42,11 +43,11 @@ public class Teacher extends User {
         this.educatorGroup = educatorGroup;
     }
 
-    public List<Subject> getSubjects() {
+    public Set<Subject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(List<Subject> subjectList) {
+    public void setSubjects(Set<Subject> subjectList) {
         this.subjects = subjectList;
     }
 

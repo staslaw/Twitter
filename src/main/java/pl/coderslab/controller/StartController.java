@@ -38,6 +38,7 @@ public class StartController {
             roleRepository.save(new Role("ROLE_TEACHER"));
         }
         if (roleRepository.findOneRoleByNameQuery("ROLE_ADMIN") == null) {
+            roleRepository.save(new Role("ROLE_ADMIN"));
             Admin admin = new Admin("admin@admin", "admin", roleRepository.findOne(3l), 1);
             adminService.saveAdmin(admin);
         }
