@@ -1,11 +1,11 @@
 # SchoolOnlineRegister
 
-Aplikacja z dostępem dla trzech rodzajów użytkowników:
-  admin - zarządza klasami nauczycieli, uczniów, klas, przedmiotów, sal lekcyjnych, wiadomości
-  teacher - przegląda wiadomości wprowadza oceny klasom które uczy
-  student - przegląda wiadomości i swoje oceny z przedmiotów których uczy się jego klasa
+Application with access for three types of users:
+  admin - manages classes of teachers, students, classes, subjects, classrooms, news
+  teacher - browses the news introduces grades to classes that teach
+  student - browses the news and his grades
 
-Aplikacja wykorzystuje:
-  biblioteki spring boot: validation, data-jpa, security, web
-  ponadto: hibernate, mysql-conector, jstl, tomcat, mail
-  w warstwie widokowej: HTML, CSS, JSP, Bootstrap, JavaScript, JQuery, ajax
+The application uses:
+  spring boot libraries: validation, data-jpa, security, web
+  in addition: hibernate, mysql-conector, jstl, tomcat, mail
+  in the viewing layer: HTML, CSS, JSP, Bootstrap, JavaScript, JQuery, ajax
