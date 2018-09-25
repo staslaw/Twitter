@@ -5,8 +5,10 @@ Application with access for three types of users:
   - standard CRUD functions
   - relations between classes: subject - teacher, student - class, subject - class and many other
   - after adding a new teacher or student, the application draws a password and sends him an email with his username and password
-  2. Teacher - browses the news introduces grades to classes that teach.
-  3. Student - browses the news and his grades.
+  2. Teacher - browses the news to teachers and introduces grades to classes that teach.
+  - creates a series of grades and determines their weights and then adds grades to each student
+  3. Student - browses the news to students and his grades.
+  - sees the class average and the weighted average of his grades of each subject
 
 The application uses:
   1. Spring boot libraries: validation, data-jpa, security, web.
