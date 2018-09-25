@@ -2,6 +2,9 @@
 
 Application with access for three types of users:
   1. Admin - manages classes of teachers, students, classes, subjects, classrooms, news.
+  - standard CRUD functions
+  - relations between classes: subject - teacher, student - class, subject - class and many other
+  - after adding a new teacher or student, the application draws a password and sends him an email with his username and password
   2. Teacher - browses the news introduces grades to classes that teach.
   3. Student - browses the news and his grades.
 
