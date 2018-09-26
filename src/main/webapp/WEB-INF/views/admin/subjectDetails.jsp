@@ -27,17 +27,17 @@
         </tr>
         <tr>
             <td>Klasy uczące się tego przedmiotu: </td>
-            <td><c:forEach items="${subject.teams}" var="team">
+            <td><c:forEach items="${teams}" var="team">
             <c:out value="${team.name}"/><br></c:forEach></td>
         </tr>
         <tr>
             <td>Sale do tego przedmiotu: </td>
-            <td><c:forEach items="${subject2.classRooms}" var="classRoom">
+            <td><c:forEach items="${subject.classRooms}" var="classRoom">
                 <c:out value="${classRoom.number}"/><br></c:forEach></td>
         </tr>
         <tr>
             <td>Nauczyciele tego przedmiotu: </td>
-            <td><c:forEach items="${subject3.teachers}" var="teacher">
+            <td><c:forEach items="${subject.teachers}" var="teacher">
                 <c:out value="${teacher.firstName} ${teacher.lastName}"/><br></c:forEach></td>
         </tr>
     </table>

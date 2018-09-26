@@ -3,6 +3,7 @@ package pl.coderslab.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import pl.coderslab.entity.Lesson;
+import pl.coderslab.entity.Subject;
 import pl.coderslab.entity.Team;
 
 import java.util.List;
@@ -20,4 +21,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
     @Query("select l from Lesson l where l.team = ?1")
     List<Lesson> findAllLessonByTeamQuery(Team team);
+
+    @Query("select l.team from Lesson l where l.subject.id = ?1")
+    List<Team> findAllTeamsWithSubjectQuery(Long id);
 }

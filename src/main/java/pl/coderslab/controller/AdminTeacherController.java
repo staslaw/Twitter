@@ -122,9 +122,6 @@ public class AdminTeacherController {
                         teacherRepository.UpdateUsernameQuery(teacherUpdated.getUsername(), teacher.getId());
                     }
                     if (teacher.getSubjects() != teacherUpdated.getSubjects()) {
-                        System.out.println(teacherUpdated.getSubjects());
-                        System.out.println(teacher.getSubjects());
-                        System.out.println(teacher.getId());
                         teacherRepository.deleteAllSubjcetsOfTeacherNative(teacher.getId());
                         for (Subject item : teacherUpdated.getSubjects()) {
                             teacherRepository.insertIntoTecherHisSubjectsNative(teacher.getId(), item.getId());

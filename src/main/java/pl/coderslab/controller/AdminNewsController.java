@@ -8,30 +8,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.entity.News;
-import pl.coderslab.repository.NewsRepository;
-import pl.coderslab.repository.RoleRepository;
-
+import pl.coderslab.service.NewsService;
+import pl.coderslab.service.RoleService;
 import javax.validation.Valid;
-import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/admin/news")
 public class AdminNewsController {
     @Autowired
-    NewsRepository newsRepository;
+    NewsService newsService;
     @Autowired
-    RoleRepository roleRepository;
+    RoleService roleService;
 
     @RequestMapping("")
     public String start(Model model) {
-        model.addAttribute("news", newsRepository.findAll());
+        model.addAttribute("news", newsService.findAll());
         return "admin/news";
     }
 
     @RequestMapping("/add")
     public String add(Model model) {
         model.addAttribute("news", new News());
-        model.addAttribute("roles", roleRepository.findAll());
+        model.addAttribute("roles", roleService.findAll());
         return "admin/newsForm";
     }
 
@@ -40,17 +38,9 @@ public class AdminNewsController {
         if (result.hasErrors()) {
             return "admin/newsForm";
         } else {
-            news.setDate(LocalDate.now());
-            try {
-                newsRepository.save(news);
-                redirectAttributes.addFlashAttribute("message", "Wiadomość dodana prawidłowo.");
-                return "redirect:/admin/news";
-            } catch (Exception e) {
-                redirectAttributes.addFlashAttribute("messageDanger", "Wiadomość nie została dodana.");
-                return "redirect:/admin/news";
-            }
+            String[] message = newsService.save(news);
+            redirectAttributes.addFlashAttribute(message[0], message[1]);
+            return "redirect:/admin/news";
         }
     }
-
-
 }

@@ -18,8 +18,6 @@ public class Subject {
     private String name;
     private String description;
     @ManyToMany(mappedBy = "subjects")
-    private List<Team> teams = new ArrayList<>();
-    @ManyToMany(mappedBy = "subjects")
     private List<Teacher> teachers = new ArrayList<>();
     @OneToMany(mappedBy = "subject")
     private List<ClassRoom> classRooms = new ArrayList<>();
@@ -48,14 +46,6 @@ public class Subject {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Team> getTeams() {
-        return teams;
-    }
-
-    public void setTeams(List<Team> groupList) {
-        this.teams = groupList;
     }
 
     public List<Teacher> getTeachers() {

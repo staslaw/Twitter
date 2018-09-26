@@ -60,8 +60,8 @@ public class AdminStudentController {
             if (admin == null && teacher == null) {
                 try {
                     student.setPassword(studentService.createPassword());
-                    studentService.saveStudent(student);
                     mailService.generateAndSendEmail(student.getUsername(), student.getUsername(), student.getPassword());
+                    studentService.saveStudent(student);
                     redirectAttributes.addFlashAttribute("message", "Uczeń dodany prawidłowo.");
                     return "redirect:/admin/students";
                 } catch (Exception e) {

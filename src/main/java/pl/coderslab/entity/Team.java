@@ -21,8 +21,6 @@ public class Team {
     @OneToOne
     @JoinColumn(name = "educator_id")
     private Teacher educator;
-    @ManyToMany
-    private List<Subject> subjects = new ArrayList<>();
     private String description;
     @OneToMany(mappedBy = "team")
     private List<Lesson> lessons = new ArrayList<>();
@@ -49,14 +47,6 @@ public class Team {
 
     public void setEducator(Teacher educator) {
         this.educator = educator;
-    }
-
-    public List<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(List<Subject> subjectList) {
-        this.subjects = subjectList;
     }
 
     public String getDescription() {
