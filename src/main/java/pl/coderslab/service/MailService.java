@@ -16,24 +16,30 @@ public class MailService {
     static Session getMailSession;
     static MimeMessage generateMailMessage;
 
-    public void generateAndSendEmail(String email, String username, String password) throws AddressException, MessagingException {
+    public String generateAndSendEmail(String email, String username, String password) {
+        String message = "";
+        try {
+            mailServerProperties = System.getProperties();
+            mailServerProperties.put("mail.smtp.port", "587");
+            mailServerProperties.put("mail.smtp.auth", "true");
+            mailServerProperties.put("mail.smtp.starttls.enable", "true");
 
-        mailServerProperties = System.getProperties();
-        mailServerProperties.put("mail.smtp.port", "587");
-        mailServerProperties.put("mail.smtp.auth", "true");
-        mailServerProperties.put("mail.smtp.starttls.enable", "true");
+            getMailSession = Session.getDefaultInstance(mailServerProperties, null);
+            generateMailMessage = new MimeMessage(getMailSession);
+            generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            generateMailMessage.setSubject("Otrzymaleś dostęp do dziennika szkolnego online");
+            String emailBody = "Twoje konto zostalo aktywowane.<br>login: " + username + "<br>haslo: " + password + "<br><br> Pozdrawiamy, <br>Dyrekcja";
+            generateMailMessage.setContent(emailBody, "text/html");
 
-        getMailSession = Session.getDefaultInstance(mailServerProperties, null);
-        generateMailMessage = new MimeMessage(getMailSession);
-        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-        generateMailMessage.setSubject("Otrzymaleś dostęp do dziennika szkolnego online");
-        String emailBody = "Twoje konto zostalo aktywowane.<br>login: " + username + "<br>haslo: " + password + "<br><br> Pozdrawiamy, <br>Dyrekcja";
-        generateMailMessage.setContent(emailBody, "text/html");
-
-        Transport transport = getMailSession.getTransport("smtp");
-        transport.connect("smtp.gmail.com", "SchoolOnlineRegister@gmail.com", "coderslab");
-        transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
-        transport.close();
+            Transport transport = getMailSession.getTransport("smtp");
+            transport.connect("smtp.gmail.com", "SchoolOnlineRegister@gmail.com", "coderslab");
+            transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
+            transport.close();
+            message = "Mail aktywacyjny został wysłany.";
+        } catch (Exception e) {
+            message = "Mail aktywacyjny nie został wysłany.";
+        }
+        return message;
     }
 
 

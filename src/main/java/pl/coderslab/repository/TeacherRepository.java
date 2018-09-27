@@ -47,11 +47,6 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
     @Transactional
     @Modifying
-    @Query("update Teacher t set t.subjects = ?1 where t.id = ?2")
-    void UpdateSubjectsQuery(Set<Subject> subjects, Long id);
-
-    @Transactional
-    @Modifying
     @Query(value = "DELETE FROM teachers_subjects WHERE teachers_id = ?1", nativeQuery = true)
     void deleteAllSubjcetsOfTeacherNative(Long id);
 
