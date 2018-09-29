@@ -10,7 +10,7 @@ Application with access for three types of users:
   3. Student - browses the news to students and his grades.
   - sees the class average and the his weighted average of each subject
 
-![Alt text](/imgaes/admin1.jpg?raw=true "Optional Title")
+![Alt text](/imgaes/admin1.png?raw=true "Optional Title")
 
 The application uses:
   1. Spring boot libraries: validation, data-jpa, security, web.
