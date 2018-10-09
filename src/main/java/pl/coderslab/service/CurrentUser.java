@@ -8,6 +8,7 @@ import pl.coderslab.entity.Role;
 public class CurrentUser extends User {
     private Long id;
     private Role role;
+
     public CurrentUser(String username, String password, Long id, Role role,
                        Collection<?extends GrantedAuthority> authorities) {
         super(username, password, authorities);

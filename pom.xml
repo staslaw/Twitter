@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pl.coderslab</groupId>
-    <artifactId>sor</artifactId>
+    <artifactId>Twitter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>sor</name>
+    <name>Twitter</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>

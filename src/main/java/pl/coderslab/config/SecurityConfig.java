@@ -6,14 +6,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import pl.coderslab.service.SpringDataStudentDetailsService;
+import pl.coderslab.service.SpringDataUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
-    public SpringDataStudentDetailsService customUserDetailsService() {
-        return new SpringDataStudentDetailsService();
+    public SpringDataUserDetailsService customUserDetailsService() {
+        return new SpringDataUserDetailsService();
     }
 
     @Bean
@@ -24,9 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/student/**").hasRole("STUDENT")
-                .antMatchers("/teacher/**").hasRole("TEACHER")
+                .antMatchers("/user/**").hasRole("USER")
                 .and().formLogin().successForwardUrl("/start")
                 .loginPage("/")
                 .and().logout().logoutSuccessUrl("/");
