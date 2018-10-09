@@ -1,4 +1,4 @@
-package pl.coderslab.sor;
+package pl.coderslab.Twitter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SorApplicationTests {
+public class TwitterApplicationTests {
 
     @Test
     public void contextLoads() {
