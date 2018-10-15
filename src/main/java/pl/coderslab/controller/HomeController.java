@@ -5,6 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,32 +39,6 @@ public class HomeController {
         return "home/start";
     }
 
-    @PostMapping("/start")
-    public String hello() {
-        return "redirect:/main";
-    }
-
-    @RequestMapping("/main")
-    public String hello(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
-        User user = userService.findUserById(currentUser.getId());
-        List<Tweet> list = tweetService.findAll();
-        model.addAttribute("user", user);
-        model.addAttribute("list", list);
-        model.addAttribute("tweet", new Tweet());
-        return "user/user";
-    }
-
-    @PostMapping("/main")
-    public String addTweet(@Valid Tweet tweet, BindingResult result, @AuthenticationPrincipal CurrentUser currentUser) {
-        if (result.hasErrors()) {
-            return "user/user";
-        } else {
-            tweetService.save(tweet, currentUser.getId());
-            return "redirect:/main";
-        }
-    }
-
-
     @RequestMapping("/log")
     public String log(Model model) {
         model.addAttribute("user", new User());
@@ -85,7 +60,5 @@ public class HomeController {
             }
         }
     }
-
-
 
 }

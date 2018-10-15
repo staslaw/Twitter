@@ -33,20 +33,35 @@
     </form:form>
 
 
-    <c:if test="${list.size() != 0}">
-            <table class="table table-striped">
-                <c:forEach items="${list}" var="tweet">
-                        <tr>
-                            <td>${tweet.user.username}</td>
-                            <td>${tweet.text}</td>
-                        </tr>
-                </c:forEach>
-            </table>
-    </c:if>
+    <table class="table table-striped">
+        <c:forEach items="${tweetsPage.content}" var="tweet">
+            <tr>
+                <td>${tweet.user.username}</td>
+                <td>${tweet.text}</td>
+            </tr>
+        </c:forEach>
+    </table>
 
-    <c:if test="${list.size() == 0}">
-        <c:out value="Brak tweetów do wyświetlenia"/>
-    </c:if>
+    <%--<ul class="nav nav-pills">--%>
+        <%--<li class="nav-item">--%>
+            <%--<c:forEach items="${numbers.sequence(0, tweetsPage.totalPages - 1)}" var="i">--%>
+                <%--<a href="/user/main?page=${i}" class="nav-link">${i}</a>--%>
+            <%--</c:forEach>--%>
+        <%--</li>--%>
+    <%--</ul>--%>
+
+    <ul class="pagination">
+        <li><a href="/user/main?page=0">&laquo;</a></li>
+        <c:forEach var = "i" begin = "0" end = "${tweetsPage.totalPages-1}">
+            <li><a href="/user/main?page=${i}">${i+1}</a></li>
+        </c:forEach>
+        <li><a href="/user/main?page=${tweetsPage.totalPages-1}">&raquo;</a></li>
+    </ul>
+
+    <%--<ul class="pager">--%>
+        <%--<li><a href="#">&larr; Poprzednia strona</a></li>--%>
+        <%--<li><a href="#">Następna strona &rarr;</a></li>--%>
+    <%--</ul>--%>
 
 </div>
 </body>

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <%--<script type="text/javascript" src="webjars/jquery/3.1.0/jquery.min.js"></script>--%>
 </head>
 <body>
 
@@ -30,14 +31,14 @@
             <%--<a class="navbar-brand" href="<c:url value="/admin"/>">Administrator</a>--%>
             <%--&lt;%&ndash;href="#"&ndash;%&gt;--%>
         <%--</div>--%>
-        <%--<ul class="nav navbar-nav">--%>
-            <%--<li><a href="<c:url value="/admin/teachers"/>">Nauczyciele</a></li>--%>
-            <%--<li><a href="<c:url value="/admin/students"/>">Uczniowie</a></li>--%>
+        <ul class="nav navbar-nav">
+            <li><a href="<c:url value="/user/main"/>">Strona główna</a></li>
+            <li><a href="<c:url value="/user/profile"/>">${user.username}</a></li>
             <%--<li><a href="<c:url value="/admin/subjects"/>">Przedmioty</a></li>--%>
             <%--<li><a href="<c:url value="/admin/classRooms"/>">Sale</a></li>--%>
             <%--<li><a href="<c:url value="/admin/teams"/>">Klasy</a></li>--%>
             <%--<li><a href="<c:url value="/admin/news"/>">Wiadomości</a></li>--%>
-        <%--</ul>--%>
+        </ul>
         <ul class="nav navbar-nav navbar-right">
             <form:form action="/logout" method="post">
             <button type="submit" value="Wyloguj" class="btn btn-link">
