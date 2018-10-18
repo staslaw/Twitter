@@ -13,6 +13,6 @@ public interface TweetRepository extends PagingAndSortingRepository<Tweet, Long>
 
     List<Tweet> findAllByUser(User user);
 
-    Page<Tweet> findAll(Pageable pageable);
+    Page<Tweet> findAllByOrderByCreatedDesc(Pageable pageable);
 
 }

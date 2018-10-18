@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
 import pl.coderslab.service.CurrentUser;
@@ -30,14 +32,6 @@ public class UserController {
         return "redirect:/user/main";
     }
 
-//    @RequestMapping("/main")
-//    public String hello(Model model, Pageable pageable) {
-//        Page<Tweet> tweetsPage = tweetService.findAll(pageable);
-//        model.addAttribute("tweetsPage", tweetsPage);
-//        model.addAttribute("tweet", new Tweet());
-//        return "user/user";
-//    }
-
     @RequestMapping("/main")
     public String hello(Model model, @RequestParam(defaultValue = "0") int page) {
         Page<Tweet> tweetsPage = tweetService.findAll(new PageRequest(page, 4));
@@ -45,8 +39,6 @@ public class UserController {
         model.addAttribute("tweet", new Tweet());
         return "user/user";
     }
-
-
 
     @PostMapping("/main")
     public String addTweet(@Valid Tweet tweet, BindingResult result, @AuthenticationPrincipal CurrentUser currentUser) {
@@ -62,6 +54,36 @@ public class UserController {
     public String profile() {
         return "user/profile";
     }
+
+    @RequestMapping("/update")
+    public String updateGet() {
+        return "user/update";
+    }
+
+    @PostMapping("/update")
+    public String updatePost(@Valid User user, BindingResult result, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "user/update";
+        } else {
+            String[] message = userService.update(user);
+            redirectAttributes.addFlashAttribute(message[0], message[1]);
+            return "redirect:/user/profile";
+        }
+    }
+
+    @PostMapping("/photo")
+    public String photo(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CurrentUser currentUser, RedirectAttributes redirectAttributes) {
+        String[] message = userService.updatePhoto(currentUser.getId(), file);
+        redirectAttributes.addFlashAttribute(message[0], message[1]);
+        return "redirect:/user/profile";
+    }
+
+    @RequestMapping("/photoRemove")
+    public String photoRemove(@AuthenticationPrincipal CurrentUser currentUser) {
+        userService.removePhoto(currentUser.getId());
+        return "redirect:/user/profile";
+    }
+
 
 
     @ModelAttribute("user")

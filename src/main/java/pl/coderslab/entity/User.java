@@ -1,6 +1,7 @@
 package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 
@@ -14,12 +15,19 @@ public class User {
     private String username;
     @NotBlank
     @Email
+    @Column(unique = true)
     protected String email;
     @NotBlank
     private String password;
     @ManyToOne
     private Role role;
     protected int enabled;
+    @Length(max=100)
+    private String description;
+    private String dateOfBirth;
+    private String photoPath;
+    private String firstName;
+    private String lastName;
 
 
     public Long getId() {
@@ -68,5 +76,45 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
