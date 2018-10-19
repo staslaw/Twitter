@@ -30,7 +30,7 @@
 
         <tr>
             <td>Password: </td>
-            <td><form:input path="password"/></td>
+            <td><form:input path="password" maxlength="20"/></td>
             <td><form:errors path="password"/></td>
         </tr>
         <tr>

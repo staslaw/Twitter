@@ -4,6 +4,10 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
+import java.sql.Date;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -12,6 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
+    @Length(max=20)
     private String username;
     @NotBlank
     @Email
@@ -24,9 +29,11 @@ public class User {
     protected int enabled;
     @Length(max=100)
     private String description;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String photoPath;
+    @Length(max=20)
     private String firstName;
+    @Length(max=20)
     private String lastName;
 
 
@@ -86,11 +93,11 @@ public class User {
         this.description = description;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

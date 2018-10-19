@@ -11,8 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.coderslab.entity.Comment;
 import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
+import pl.coderslab.service.CommentService;
 import pl.coderslab.service.CurrentUser;
 import pl.coderslab.service.TweetService;
 import pl.coderslab.service.UserService;
@@ -26,6 +28,9 @@ public class UserController {
     UserService userService;
     @Autowired
     TweetService tweetService;
+    @Autowired
+    CommentService commentService;
+
 
     @PostMapping("/start")
     public String hello() {
@@ -34,7 +39,7 @@ public class UserController {
 
     @RequestMapping("/main")
     public String hello(Model model, @RequestParam(defaultValue = "0") int page) {
-        Page<Tweet> tweetsPage = tweetService.findAll(new PageRequest(page, 4));
+        Page<Tweet> tweetsPage = tweetService.findAll(new PageRequest(page, 10));
         model.addAttribute("tweetsPage", tweetsPage);
         model.addAttribute("tweet", new Tweet());
         return "user/user";
@@ -84,6 +89,19 @@ public class UserController {
         return "redirect:/user/profile";
     }
 
+    @RequestMapping("/tweetDetails")
+    public String tweetDetails(@RequestParam Long id, Model model) {
+        model.addAttribute("tweet", tweetService.findOneById(id));
+        model.addAttribute("comment", new Comment());
+        model.addAttribute("comments", commentService.findAllByTweet(id));
+        return "user/tweet";
+    }
+
+    @PostMapping("/tweetDetails")
+    public String tweetDetailsPost(@RequestParam String text, @RequestParam Long tweetId, @AuthenticationPrincipal CurrentUser currentUser) {
+        commentService.saveComment(text, currentUser.getId(), tweetId);
+        return "redirect:/user/tweetDetails?id=" + tweetId;
+    }
 
 
     @ModelAttribute("user")

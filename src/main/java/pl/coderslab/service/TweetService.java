@@ -8,7 +8,12 @@ import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
 import pl.coderslab.repository.TweetRepository;
 import pl.coderslab.repository.UserRepository;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -20,7 +25,7 @@ public class TweetService {
 
 
     public Page<Tweet> findAll(Pageable pageable) {
-        return tweetRepository.findAllByOrderByCreatedDesc(pageable);
+        return tweetRepository.findAllByOrderByIdDesc(pageable);
     }
 
     public List<Tweet> findTweetsByUserId(Long id) {
@@ -29,10 +34,16 @@ public class TweetService {
     }
 
     public void save(Tweet tweet, Long userId) {
-        LocalDateTime dateTime= LocalDateTime.now();
-        tweet.setCreated(String.valueOf(dateTime));
+        Date date= Date.valueOf(LocalDate.now());
+        Time time = Time.valueOf(LocalTime.now());
+        tweet.setCreatedDate(date);
+        tweet.setCreatedTime(time);
         tweet.setUser(userRepository.findOne(userId));
         tweetRepository.save(tweet);
+    }
+
+    public Tweet findOneById(Long id){
+        return tweetRepository.findOne(id);
     }
 
 

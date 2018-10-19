@@ -16,53 +16,53 @@
 
 
 <div class="container">
-    <h3>Witaj ${user.username}</h3>
-
-    <form:form modelAttribute="tweet" method="POST">
-        <table>
-            <tr>
-                <td><form:textarea rows="5" cols="50" path="text" maxlength="140"/></td>
-                <td><input type="submit" value="dodaj"/></td>
-
-            </tr>
-            <tr>
-                <td><form:errors path="text"/></td>
-                <td></td>
-            </tr>
-        </table>
-    </form:form>
-
-
     <table class="table table-striped">
+        <tr height="20">
+            <td align="center">
+                <h3>last tweets</h3>
+            </td>
+            <td rowspan="3" align="center">
+                <h3>write new tweet!</h3>
+                <form:form modelAttribute="tweet" method="POST">
+                    <form:textarea rows="5" cols="30" path="text" maxlength="140"/>
+                    <input type="submit" value="dodaj"/>
+                    <form:errors path="text"/>
+                </form:form>
+            </td>
+        </tr>
         <c:forEach items="${tweetsPage.content}" var="tweet">
             <tr>
-                <td>${tweet.user.username}</td>
-                <td>${tweet.text}</td>
+                <td>
+                    <div class="media">
+                        <div class="media-left">
+                            <img src=${tweet.user.photoPath} class="media-object" style="width:60px">
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">${tweet.user.username} <small><i> ${tweet.createdDate} ${tweet.createdTime}</i></small></h4>
+                            <p>
+                                <a style="text-decoration: none;"
+                                  href="/user/tweetDetails?id=${tweet.id}">${tweet.text}</a><br>
+                                <a style="text-decoration: none;"><small><i>liczba komentarzy: ${tweet.comments.size()}</i></small></a>
+                            </p>
+                        </div>
+                    </div>
+                </td>
             </tr>
         </c:forEach>
     </table>
 
-    <%--<ul class="nav nav-pills">--%>
-        <%--<li class="nav-item">--%>
-            <%--<c:forEach items="${numbers.sequence(0, tweetsPage.totalPages - 1)}" var="i">--%>
-                <%--<a href="/user/main?page=${i}" class="nav-link">${i}</a>--%>
-            <%--</c:forEach>--%>
-        <%--</li>--%>
-    <%--</ul>--%>
-
-    <ul class="pagination">
-        <li><a href="/user/main?page=0">&laquo;</a></li>
-        <c:forEach var = "i" begin = "0" end = "${tweetsPage.totalPages-1}">
-            <li><a href="/user/main?page=${i}">${i+1}</a></li>
-        </c:forEach>
-        <li><a href="/user/main?page=${tweetsPage.totalPages-1}">&raquo;</a></li>
-    </ul>
-
-    <%--<ul class="pager">--%>
-        <%--<li><a href="#">&larr; Poprzednia strona</a></li>--%>
-        <%--<li><a href="#">Następna strona &rarr;</a></li>--%>
-    <%--</ul>--%>
+    <c:if test="${tweetsPage.totalPages} != 0">
+        <ul class="pagination">
+            <li><a href="/user/main?page=0">&laquo;</a></li>
+            <c:forEach var="i" begin="0" end="${tweetsPage.totalPages-1}">
+                <li><a href="/user/main?page=${i}">${i+1}</a></li>
+            </c:forEach>
+            <li><a href="/user/main?page=${tweetsPage.totalPages-1}">&raquo;</a></li>
+        </ul>
+    </c:if>
 
 </div>
+
+<%--<script src="js/app.js"></script>--%>
 </body>
 </html>
