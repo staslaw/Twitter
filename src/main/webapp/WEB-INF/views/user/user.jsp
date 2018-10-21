@@ -38,7 +38,8 @@
                             <img src=${tweet.user.photoPath} class="media-object" style="width:60px">
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">${tweet.user.username} <small><i> ${tweet.createdDate} ${tweet.createdTime}</i></small></h4>
+                            <h4 class="media-heading"><a style="text-decoration: none;"
+                                                         href="/user/otherUser?id=${tweet.user.id}">${tweet.user.username}</a><small><i> ${tweet.createdDate} ${tweet.createdTime}</i></small></h4>
                             <p>
                                 <a style="text-decoration: none;"
                                   href="/user/tweetDetails?id=${tweet.id}">${tweet.text}</a><br>
@@ -63,6 +64,5 @@
 
 </div>
 
-<%--<script src="js/app.js"></script>--%>
 </body>
 </html>

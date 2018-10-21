@@ -28,9 +28,9 @@ public class TweetService {
         return tweetRepository.findAllByOrderByIdDesc(pageable);
     }
 
-    public List<Tweet> findTweetsByUserId(Long id) {
+    public Page<Tweet> findTweetsByUserId(Long id, Pageable pageable) {
         User user = userRepository.findOne(id);
-        return tweetRepository.findAllByUser(user);
+        return tweetRepository.findAllByUserOrderByIdDesc(user, pageable);
     }
 
     public void save(Tweet tweet, Long userId) {

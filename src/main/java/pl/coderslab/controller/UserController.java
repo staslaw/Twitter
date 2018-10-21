@@ -103,6 +103,14 @@ public class UserController {
         return "redirect:/user/tweetDetails?id=" + tweetId;
     }
 
+    @RequestMapping("/otherUser")
+    public String otherUser(@RequestParam Long id, Model model, @RequestParam(defaultValue = "0") int page) {
+        model.addAttribute("other", userService.findUserById(id));
+        Page<Tweet> tweetsPage = tweetService.findTweetsByUserId(id, new PageRequest(page, 10));
+        model.addAttribute("tweetsPage", tweetsPage);
+        return "user/other";
+    }
+
 
     @ModelAttribute("user")
     public User username(@AuthenticationPrincipal CurrentUser currentUser) {
