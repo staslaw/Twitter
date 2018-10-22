@@ -6,4 +6,4 @@ The user after registering and logging in can:
 
 The application uses:
 - Java, Sprin boot, Spring security, Spring data, Hibernate, Javax.mail, mySQL,Javax.servlet, Tomcat, JPA, JPQL
-- HTML, CSS, JavaScript, JSTL,
+- HTML, CSS, JavaScript, JSTL, Bootstrap
