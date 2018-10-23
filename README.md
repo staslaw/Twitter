@@ -5,5 +5,5 @@ The user after registering and logging in can:
 - send and receive messages from other users
 
 The application uses:
-- Java, Sprin boot, Spring security, Spring data, Hibernate, Javax.mail, mySQL,Javax.servlet, Tomcat, JPA, JPQL
+- Java, Spring boot, Spring security, Spring data, Hibernate, Javax.mail, mySQL,Javax.servlet, Tomcat, JPA, JPQL
 - HTML, CSS, JavaScript, JSTL, Bootstrap
