@@ -5,8 +5,9 @@ The user after registering and logging in can:
 - send and receive messages from other users
 
 The application uses:
-- Java, Spring boot, Spring security, Spring data, Hibernate, Javax.mail, mySQL,Javax.servlet, Tomcat, JPA, JPQL
-- HTML, CSS, JavaScript, JSTL, Bootstrap
+- Spring boot libraries: validation, data-jpa, security, web.
+- In addition: hibernate, mysql-conector, jstl, tomcat, mail.
+- In the viewing layer: HTML, CSS, JSP, Bootstrap, JavaScript.
 
   ![](screenshots/twitter1.png)
   ![](screenshots/twitter2.png)
