@@ -3,7 +3,6 @@ package pl.coderslab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.entity.Comment;
 import pl.coderslab.entity.Tweet;
 import pl.coderslab.entity.User;
-import pl.coderslab.service.CommentService;
-import pl.coderslab.service.CurrentUser;
-import pl.coderslab.service.TweetService;
-import pl.coderslab.service.UserService;
+import pl.coderslab.service.*;
 
 import javax.validation.Valid;
 
@@ -30,6 +26,8 @@ public class UserController {
     TweetService tweetService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    MessageService messageService;
 
 
     @PostMapping("/start")
@@ -55,11 +53,6 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/profile")
-    public String profile() {
-        return "user/profile";
-    }
-
     @RequestMapping("/update")
     public String updateGet() {
         return "user/update";
@@ -70,9 +63,13 @@ public class UserController {
         if (result.hasErrors()) {
             return "user/update";
         } else {
+            if (user.getDateOfBirth().equals("")) {
+                user.setDateOfBirth(null);
+            }
+
             String[] message = userService.update(user);
             redirectAttributes.addFlashAttribute(message[0], message[1]);
-            return "redirect:/user/profile";
+            return "redirect:/user/profile?id=" + user.getId();
         }
     }
 
@@ -80,13 +77,13 @@ public class UserController {
     public String photo(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CurrentUser currentUser, RedirectAttributes redirectAttributes) {
         String[] message = userService.updatePhoto(currentUser.getId(), file);
         redirectAttributes.addFlashAttribute(message[0], message[1]);
-        return "redirect:/user/profile";
+        return "redirect:/user/profile?id=" + currentUser.getId();
     }
 
     @RequestMapping("/photoRemove")
     public String photoRemove(@AuthenticationPrincipal CurrentUser currentUser) {
         userService.removePhoto(currentUser.getId());
-        return "redirect:/user/profile";
+        return "redirect:/user/profile?id=" + currentUser.getId();
     }
 
     @RequestMapping("/tweetDetails")
@@ -103,14 +100,53 @@ public class UserController {
         return "redirect:/user/tweetDetails?id=" + tweetId;
     }
 
-    @RequestMapping("/otherUser")
+    @RequestMapping("/profile")
     public String otherUser(@RequestParam Long id, Model model, @RequestParam(defaultValue = "0") int page) {
         model.addAttribute("other", userService.findUserById(id));
         Page<Tweet> tweetsPage = tweetService.findTweetsByUserId(id, new PageRequest(page, 10));
         model.addAttribute("tweetsPage", tweetsPage);
-        return "user/other";
+        return "user/profile";
     }
 
+    @RequestMapping("/message")
+    public String message(@RequestParam Long id, Model model) {
+        model.addAttribute("userToId", id);
+        return "user/message";
+    }
+
+    @PostMapping("/message")
+    public String messagePost(@RequestParam Long userToId, @RequestParam String text, @AuthenticationPrincipal CurrentUser currentUser, RedirectAttributes redirectAttributes) {
+        String[] message = messageService.sendMessage(text, userToId, currentUser.getId());
+        redirectAttributes.addFlashAttribute(message[0], message[1]);
+        return "redirect:/user/profile?id=" + userToId;
+    }
+
+    @RequestMapping("/messages")
+    public String messagesPage(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        model.addAttribute("messagesSent", messageService.messagesSent(currentUser.getId()));
+        model.addAttribute("messagesGot", messageService.messagesGot(currentUser.getId()));
+        return "user/messages";
+    }
+
+    @RequestMapping("/changePassword")
+    public String changePassword() {
+        return "user/changePassword";
+    }
+
+    @PostMapping("/changePassword")
+    public String changePasswordPost(@RequestParam String password, @RequestParam String passwordConfirm, @AuthenticationPrincipal CurrentUser currentUser, RedirectAttributes redirectAttributes) {
+        if (!userService.isPasswordCorrect(password, passwordConfirm)) {
+            redirectAttributes.addFlashAttribute("messageDanger", "please confirm password correctly");
+            return "user/changePassword";
+        } else if (userService.isPasswordEmpty(password)) {
+            redirectAttributes.addFlashAttribute("messageDanger", "password may not be empty");
+            return "user/changePassword";
+        } else {
+            String[] message = userService.changePassword(password, currentUser.getId());
+            redirectAttributes.addFlashAttribute(message[0], message[1]);
+            return "redirect:/user/profile?id=" + currentUser.getId();
+        }
+    }
 
     @ModelAttribute("user")
     public User username(@AuthenticationPrincipal CurrentUser currentUser) {

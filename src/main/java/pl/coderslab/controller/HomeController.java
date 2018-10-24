@@ -52,7 +52,7 @@ public class HomeController {
         } else {
             if (!userService.isExist(user.getEmail())) {
                 String[] message = userService.saveUser(user);
-                redirectAttributes.addFlashAttribute(message[0], message[1]);
+                redirectAttributes.addFlashAttribute(message[0], message[1] + " " + message[2]);
                 return "redirect:/";
             } else {
                 redirectAttributes.addFlashAttribute("messageDanger", "Podaj inny email.");

@@ -23,7 +23,8 @@
                         <img src=${tweet.user.photoPath} class="media-object" style="width:60px">
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading">${tweet.user.username} <small><i> ${tweet.createdDate} ${tweet.createdTime}</i></small></h4>
+                        <h4 class="media-heading"><a style="text-decoration: none;"
+                                                     href="/user/profile?id=${tweet.user.id}">${tweet.user.username} </a><small><i> ${tweet.createdDate} ${tweet.createdTime}</i></small></h4>
                         <p>${tweet.text}</p>
 
                         <c:forEach items="${comments}" var="comment">
@@ -32,7 +33,8 @@
                                 <img src=${comment.user.photoPath} class="media-object" style="width:60px">
                             </div>
                             <div class="media-body">
-                                <h4 class="media-heading">${comment.user.username} <small><i> ${comment.createdDate} ${comment.createdTime}</i></small></h4>
+                                <h4 class="media-heading"><a style="text-decoration: none;"
+                                                             href="/user/profile?id=${comment.user.id}">${comment.user.username} </a><small><i> ${comment.createdDate} ${comment.createdTime}</i></small></h4>
                                 <p>${comment.text}</p>
                             </div>
                         </div>

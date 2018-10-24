@@ -19,7 +19,7 @@
 </head>
 <body>
 
-<div class="container-fluid" style="background-color:#1b6d85;color:#fff">
+<div class="container-fluid" style="background-color:darkgreen;color:#fff">
     <div class="text-center">
         <h1>Twitter</h1>
     </div>
@@ -27,27 +27,25 @@
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
-        <%--<div class="navbar-header">--%>
-            <%--<a class="navbar-brand" href="<c:url value="/admin"/>">Administrator</a>--%>
-            <%--&lt;%&ndash;href="#"&ndash;%&gt;--%>
-        <%--</div>--%>
-        <ul class="nav navbar-nav">
-            <li><a href="<c:url value="/user/main"/>">Strona główna</a></li>
-            <li><a href="<c:url value="/user/profile"/>">${user.username}</a></li>
-            <%--<li><a href="<c:url value="/admin/subjects"/>">Przedmioty</a></li>--%>
-            <%--<li><a href="<c:url value="/admin/classRooms"/>">Sale</a></li>--%>
-            <%--<li><a href="<c:url value="/admin/teams"/>">Klasy</a></li>--%>
-            <%--<li><a href="<c:url value="/admin/news"/>">Wiadomości</a></li>--%>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <form:form action="/logout" method="post">
-            <button type="submit" value="Wyloguj" class="btn btn-link">
-                <span class="glyphicon glyphicon-log-in"></span> Wyloguj
-                </form:form>
-        </ul>
+        <c:if test="${user.id > 0}">
+            <ul class="nav navbar-nav">
+                <li><a href="<c:url value="/user/main"/>">Home</a></li>
+                <li><a href="<c:url value="/user/profile?id=${user.id}"/>">Profile</a></li>
+                <li><a href="<c:url value="/user/messages"/>">Messages</a></li>
+                    <%--<li><a href="<c:url value="/admin/classRooms"/>">Sale</a></li>--%>
+                    <%--<li><a href="<c:url value="/admin/teams"/>">Klasy</a></li>--%>
+                    <%--<li><a href="<c:url value="/admin/news"/>">Wiadomości</a></li>--%>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form:form action="/logout" method="post">
+                <button type="submit" value="Wyloguj" class="btn btn-link">
+                    <span class="glyphicon glyphicon-log-in"></span> Log out
+                    </form:form>
+            </ul>
+        </c:if>
+
     </div>
 </nav>
-
 
 
 <c:if test="${not empty message}">

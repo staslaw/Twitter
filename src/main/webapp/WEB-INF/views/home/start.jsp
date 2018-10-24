@@ -15,13 +15,33 @@
 <jsp:include page="../../../WEB-INF/fragments/header.jsp"/>
 
 <form:form method="post">
-    <label>Email:</label>
-    <input type="email" name="username"><br>
-    <label>Password:</label>
-    <input type="password" name="password"><br>
-    <button type="submit" value="Zaloguj">Zaloguj</button>
+    <table class="table" align="center">
+        <tr>
+            <td>
+                <label>Email:</label>
+            </td>
+            <td>
+                <input type="email" name="username"><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Password:</label>
+            </td>
+            <td>
+                <input type="password" name="password"><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit" value="Zaloguj">Zaloguj</button>
+            </td>
+            <td>
+                <a href="/log">Sign in</a>
+            </td>
+        </tr>
+    </table>
 </form:form>
-<a href="/log">Sign in</a>
 
 </body>
 </html>

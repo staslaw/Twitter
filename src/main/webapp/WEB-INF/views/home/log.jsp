@@ -11,10 +11,10 @@
 <head>
     <title>Title</title>
 </head>
+<body>
 <jsp:include page="../../../WEB-INF/fragments/header.jsp"/>
 
 
-<body>
 <form:form modelAttribute="user" method="POST">
     <table class="table">
         <tr>
@@ -30,7 +30,7 @@
 
         <tr>
             <td>Password: </td>
-            <td><form:input path="password" maxlength="20"/></td>
+            <td><form:input path="password" maxlength="20" type="password"/></td>
             <td><form:errors path="password"/></td>
         </tr>
         <tr>

@@ -1,5 +1,6 @@
 package pl.coderslab.entity;
 
+import com.sun.istack.internal.Nullable;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -29,6 +30,7 @@ public class User {
     protected int enabled;
     @Length(max=100)
     private String description;
+    @Nullable
     private Date dateOfBirth;
     private String photoPath;
     @Length(max=20)

@@ -16,7 +16,7 @@ public class MailService {
     static Session getMailSession;
     static MimeMessage generateMailMessage;
 
-    public String generateAndSendEmail(String email, String username, String password) {
+    public String generateAndSendEmail(String email, String password) {
         String message = "";
         try {
             mailServerProperties = System.getProperties();
@@ -27,12 +27,12 @@ public class MailService {
             getMailSession = Session.getDefaultInstance(mailServerProperties, null);
             generateMailMessage = new MimeMessage(getMailSession);
             generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-            generateMailMessage.setSubject("Otrzymaleś dostęp do dziennika szkolnego online");
-            String emailBody = "Twoje konto zostalo aktywowane.<br>login: " + username + "<br>haslo: " + password + "<br><br> Pozdrawiamy, <br>Dyrekcja";
+            generateMailMessage.setSubject("Your account has been activated");
+            String emailBody = "enter your email as your login" + "<br>password: " + password + "<br><br> Regards, <br>Twitter";
             generateMailMessage.setContent(emailBody, "text/html");
 
             Transport transport = getMailSession.getTransport("smtp");
-            transport.connect("smtp.gmail.com", "SchoolOnlineRegister@gmail.com", "coderslab");
+            transport.connect("smtp.gmail.com", "twitterprojectnoreply@gmail.com", "coderslab");
             transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
             transport.close();
             message = "Mail aktywacyjny został wysłany.";
@@ -44,6 +44,6 @@ public class MailService {
 
 
         public void main(String args[]) throws AddressException, MessagingException {
-        generateAndSendEmail("sniemyski@o2.pl", "username", "password");
+        generateAndSendEmail("sniemyski@o2.pl", "password");
     }
 }

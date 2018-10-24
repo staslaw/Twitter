@@ -39,7 +39,7 @@ public class UserService implements UserServiceInterface {
         user.setEnabled(1);
         user.setRole(roleRepository.findOneRoleByNameQuery("ROLE_USER"));
         user.setPhotoPath("/images/avatar.jpg");
-//        message[2] = mailService.generateAndSendEmail(student.getUsername(), student.getUsername(), student.getPassword());
+        message[2] = mailService.generateAndSendEmail(user.getEmail(), user.getPassword());
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
@@ -131,6 +131,29 @@ public class UserService implements UserServiceInterface {
             message[1] = "profile was not edited";
         }
         return message;
+    }
+
+    public String[] changePassword(String password, Long id) {
+        String[] message = new String[2];
+        try {
+            User user = userRepository.findOne(id);
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+            message[0] = "message";
+            message[1] = "password was changed successful";
+        } catch (Exception e) {
+            message[0] = "messageDanger";
+            message[1] = "password was not changed";
+        }
+        return message;
+    }
+
+    public boolean isPasswordCorrect(String password, String passwordConfirm) {
+        return password.equals(passwordConfirm);
+    }
+
+    public boolean isPasswordEmpty(String password) {
+        return password.equals("");
     }
 
 

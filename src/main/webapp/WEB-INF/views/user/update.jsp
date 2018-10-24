@@ -63,7 +63,7 @@
         </tr>
         <tr>
             <td>date of birth:</td>
-            <td><form:input type="date" path="dateOfBirth"/></td>
+            <td><form:input type="date" path="dateOfBirth" default="null"/></td>
             <td><form:errors path="dateOfBirth"/></td>
         </tr>
         <tr>
